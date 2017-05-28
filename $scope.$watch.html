@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body >
+	<div ng-app='myApp' ng-controller='control'>
+		<input type='text' set-Focus ng-blur='setBlur()'/>
+		<button ng-click='getFocus()'>获取焦点</button>
+	</div>
+
+	<script>
+		var app = angular.module('myApp',[])
+
+		app.controller('control',function($scope){
+			$scope.isFocus = false;
+			$scope.method = function(){
+				return $scope.isFocus;
+			}
+
+			$scope.getFocus = function(){
+				$scope.isFocus = true;
+				$scope.method();
+			}
+
+			$scope.setBlur = function(){
+				$scope.isFocus = false;
+			}
+		})
+
+		//自定义指令
+		app.directive('setFocus',[function(){
+			return {
+				link:function(scope,element){
+					scope.$watch(scope.method,function(newValue,oldValue,scope){
+							if( newValue && !oldValue ){
+								element[0].focus();//获取焦点
+							}
+					},true)
+				}
+			}
+		}])
+
+
+		//scope.$watch 这个会默认执行
+	</script>
+	
+</body>
+</html>

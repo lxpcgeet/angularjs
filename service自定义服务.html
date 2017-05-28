@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body >
+	<div ng-app='myApp' ng-controller='myCtrl'>
+		<h1> {{ r }} </h1>
+	</div>
+	<!--服务  factory  service  provider-->
+	<script>
+		var app = angular.module('myApp',[]);
+
+		app.service('myService',function($http,$q){   
+			this.name = 'service';
+			this.myFunc = function(x){
+				return x.toString(16);//转换成16进制
+			}
+
+			this.getData = function(){
+				var q = $q.defer();
+				$http.get('ursl')
+					.success(function(response){
+						d.resolve(response);
+					})
+					.error(function(){
+						alert(0);
+						d.reject('error')
+					})
+				return d.promise;
+			}
+		})
+
+		app.controller('myCtrl',funtion($scope,myService){
+			$scope.r = myService.myFunc( 255 );
+
+			myService.getData().then(function(data){
+				console.log( data )//正确的时候走这里
+			},function(data){
+				console.log( data )//错误的时候走这里
+			})
+		})
+
+		
+		
+		
+	</script>
+</body>
+</html>

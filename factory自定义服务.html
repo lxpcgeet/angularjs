@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body >
+	<div ng-app='myApp' ng-controller='myCtrl'>
+		<h1> {{ r }} </h1>
+	</div>
+	<!--服务  factory  service  provider-->
+	<script>
+		var app = angular.module('myApp',[])
+
+		//工厂模式创建自定义服务
+		app.factory('myFactory',function(){
+			var service = {};
+			service.name = '张三';
+			var age;
+			service.setAge = function(newAge){
+				age = newAge;
+			}
+
+			service.getAge = function(){
+				return age;
+			}
+
+			return service;//返回一个object对象
+		})
+		
+		app.controller('myCtrl',function($scope,myFactory){
+			myFactory.setAge(20);
+			$scope.r = myFactory.getAge();
+			alert(myFactory.name) 
+		})
+		
+	</script>
+</body>
+</html>

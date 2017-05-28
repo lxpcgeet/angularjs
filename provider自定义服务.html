@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body >
+	<div ng-app='myApp' ng-controller='myCtrl'></div>
+	<!--服务  factory  service  provider-->
+	<script>
+		var app = angular.module('myApp',[]);
+
+		app.config(function(myProviderProvider){//在注入provider的时候，名字应该是providerName + Provider
+			myProviderProvider.setName('大圣');//传递给setName的参数为  ‘大圣’
+		})
+
+		app.provider('myProvider',function(){//自定义服务
+			var name = '';
+			var test = { 'a':1,'b':2 };
+
+			this.setName = function(newName){
+				name = newName;
+			}
+
+			this.$get = function($http,$q){//$q angular内部服务，可以使你异步的执行函数，并使用函数的返回值
+				return {
+					getData:function(){
+						var d = $q.defer();//创建一个延迟对象
+
+						$http.get('url')
+						.success(function(response){
+							d.resolve(response)//d.resolve 成功解决response 成功后的返回值
+						}).error(function(){
+							d.reject('error')//d.reject 没有成功解决
+						})
+						return d.promise//d.promise返回当前任务完成后的返回值
+					},
+					'lastName':name,
+					'test':test
+				}
+			}
+		})
+
+		app.controller('myCtrl',function($scope,myProvider){
+			alert(myProvider.lastName);
+			alert(myProvider.test.a);
+
+			myProvider.getData().then(function(data){
+				//alert(data)
+			},function(data){
+				//alert(data)
+			})
+		})
+		
+		
+	</script>
+</body>
+</html>

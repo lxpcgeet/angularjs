@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body >
+	<!--1.将下拉菜单的值写死-->
+	<!-- <div ng-app='myApp' ng-controller='myCtrl'>
+		<select ng-model='adStyle' ng-change='look()'>
+			<option value='0' >全部广告类型</option>
+			<option value='1' >图片广告</option>
+			<option value='2' >图音视广告</option>
+		</select>
+	</div>
+	
+	<script>
+		var app = angular.module('myApp',[])
+
+		app.controller('myCtrl',function($scope){
+			$scope.adStyle = '1';
+
+			$scope.look = function(){
+				alert($scope.adStyle)
+			}
+		})
+	</script> -->
+	<!--2.使用ng-options-->
+	<!-- <div ng-app='myApp1' ng-controller='myCtrl1'>
+		<select ng-model='model' ng-options='x for x in names'>
+			<option value=''>所有人</option>
+		</select>
+	</div>
+
+	<script>
+		var app1 = angular.module('myApp1',[])
+
+		app1.controller('myCtrl1',function($scope){
+			$scope.names = ['张三','李四','王二','麻子']
+		})
+
+	</script> -->
+
+	<!--3.使用ng-repeat-->
+	<!-- <div ng-app='myApp2' ng-controller='myCtrl2'>
+		<select>
+			<option ng-repeat='x in names'>{{x}}</option>
+		</select>
+	</div>
+
+	<script>
+		var app2 = angular.module('myApp2',[])
+
+		app2.controller('myCtrl2',function($scope){
+			$scope.names = ['张三','李四','王二','麻子']
+		})
+	</script> -->
+
+	<!--4.ng-options选择的是对象，而ng-repeat选择的是字符串-->
+	<!--ng-repeat-->
+	<!-- <div ng-app='myApp' ng-controller='myCtrl'>
+		<select ng-model='selectModel' >
+			<option value=''>所有人</option>
+			<option ng-repeat='x in names' value='{{x.content}}'>{{x.name}}</option>
+		</select>
+		<h1>你选择的将是一个value对应的字符串:{{selectModel}}</h1>
+	</div> -->
+<!-- 
+	<script>
+		var app = angular.module('myApp',[])
+
+		app.controller('myCtrl',function($scope){
+
+			$scope.selectModel = '我有病'
+			$scope.names = [
+				{name:'张三',content:'我有病'},
+				{name:'李四',content:'我有药'},
+				{name:'王五',content:'我有啥都有'}
+			]
+		})
+	</script> -->
+
+
+	<!--ng-options-->
+	<div ng-app='myApp' ng-controller='myCtrl'>
+		<select ng-model='selectModel' ng-options=' x.name for x in names '>
+			<option value=''>所有人</option>
+		</select>
+
+		<h1>你选择的是：{{selectModel.name}}</h1>
+
+		<p>内容是：{{selectModel.content}}</p>
+	</div>
+
+	<script>
+		var app = angular.module('myApp',[])
+
+		app.controller('myCtrl',function($scope){
+
+			$scope.names = [
+				{name:'张三',content:'我有病'},
+				{name:'李四',content:'我有药'},
+				{name:'王五',content:'我有啥都有'}
+			]
+		})
+	</script>
+
+
+	
+</body>
+</html>

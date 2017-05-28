@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app='myApp'>
+	<!-- <my-directive></my-directive> -->
+<!-- 
+	<script>
+		var app = angular.module('myApp',[])
+
+		app.directive('myDirective',function(){
+			return {
+				restrict:'AE',
+				template:'<h1>模板：可以写自己的html页面代码</h1>',//指令使用的模板，可以将html代码写在这里。templateUrl从指定的url地址加载模板，与template二选其一
+				replace:true,//是否用模板替换当前元素 如果是true，将指令标签替换成模板的内容，页面中不会出现如my-template这个标签  false 则将该模板append到这个元素里边
+				//controller:定义与其他指令进行交互的接口函数
+				//link:以编程的方式操作DOM，包括添加监听器等
+			}
+		})
+		
+
+
+	</script> -->
+
+	<!-- <div ng-app='myApp' ng-controller='myController'>
+		<my-directive></my-directive>
+
+		
+	</div>
+
+	<script type='text/ng-template' id='template.html'>
+		<div>我是一个templateUrl形式的模板</div>
+	</script>
+
+	<script>
+		var app = angular.module('myApp',[])
+
+		app.controller('myController',function($scope){
+
+		})
+
+		app.directive('myDirective',function(){
+			return {
+				restrict:'AE',
+				templateUrl:'template.html',
+				
+			}
+		})
+	</script> -->
+
+	<!--什么是scope的父级作用域-->
+	<div ng-app='myApp' ng-controller='myCtrl'>
+		<my-directive speak='obj'></my-directive>
+	</div>
+	<script>
+		var app = angular.module('myApp',[]);
+
+		app.controller('myCtrl',function($scope){
+			$scope.obj = '副作用与'
+		})
+
+		app.directive('myDirective',function(){
+			return {
+				restrict:'AE',
+				template:'<p>这是模板内容</p>',
+				scope:{
+					title:'=speak'
+				},
+				link:function postLink(scope,iElement,iAttrs){
+					console.log( scope.title )
+				}
+			}
+		})
+	</script>
+
+
+</body>
+</html>

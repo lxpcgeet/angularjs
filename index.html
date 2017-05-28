@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="serviceApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+</head>
+<body >
+	<div ng-controller='myCtrl'>
+		name:{{name}} <br/>
+		age:{{age}} <br/>
+		love:{{love}} <br/>
+		money:{{money}} <br/>
+	</div>
+
+	<div ng-controller='myOtherCtrl'>
+		name:{{name}} <br/>
+		love:{{love}} <br/>
+	</div>
+
+	<script>
+		var serviceApp = angular.module('serviceApp',[])
+
+		serviceApp.controller('myCtrl',function($scope,myConfig){
+			$scope.name = myConfig.name;
+			$scope.age = myConfig.age;
+			$scope.love = myConfig.love;
+			$scope.money = myConfig.money;
+			$scope.id=myConfig.getId();
+			$scope.$watch(myConfig.love,function(){
+				$scope.love = myConfig.love;
+			})
+		})
+
+		serviceApp.controller('myOtherCtrl',function($scope,myConfig){
+			$scope.name = myConfig.name;
+			$scope.love = myConfig.love;
+
+			angular.extend(myConfig,{love:'zxg'})
+
+			$scope.$watch(myConfig.love,function(){
+				$scope.love = myConfig.love
+			})
+		})
+
+		//创建myConfig服务的方法1  constant 创建常量  一般用这个创建的服务不建议修改
+		// serviceApp.constant('myConfig',{
+		// 	name:'lixiaopeng',
+		// 	age:12,
+		// 	getId:function(){
+		// 		return 1
+		// 	}
+		// })
+		
+		//创建myConfig服务的方法2  value创建的服务
+		// serviceApp.value('myConfig',{
+		// 	name:'lixiaopeng',
+		// 	age:12,
+		// 	getId:function(){
+		// 		return 1
+		// 	}
+		// })
+
+		// serviceApp.config(function($provide){
+		// 	$provide.decorator('myConfig',function($delegate){
+		// 		$delegate.money = '100w';
+		// 		return $delegate
+		// 	})
+		// })
+
+		//创建myConfig服务的方法3  factory创建的服务
+		// serviceApp.factory('myConfig',function(){
+		// 	var name = 'lixiaopeng';
+		// 	var age = 12;
+		// 	var id = 1;
+		// 	return {
+		// 		name:name,
+		// 		age:age,
+		// 		getId:function(){
+		// 			return id
+		// 		}
+		// 	}
+		// })
+
+		//创建myConfig服务的方法4  service服务
+		serviceApp.service('myConfig',function(){
+			var name = 'lixiaopeng';
+			var age = 12;
+			var id = 1;
+
+			this.name = name;
+			this.age = age;
+			this.getId = function(){
+				return id
+			}
+		})
+		
+
+		//创建myConfig服务的方法5
+		
+		
+	</script>
+</body>
+</html>
